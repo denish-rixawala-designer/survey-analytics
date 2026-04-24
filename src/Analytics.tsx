@@ -26,6 +26,8 @@ const T = {
     gray: { bg: "#f3f4f7", text: "#4f5f7f", border: "#dde2eb", bar: "#888888" },
     purple: { bg: "#f1ebff", text: "#4f2f8e", border: "#d9ccf6", bar: "#5f35a1" },
     teal: { bg: "#e9f8fa", text: "#0f6d78", border: "#c8e8ed", bar: "#2ea5b4" },
+    rose: { bg: "#fff1f2", text: "#be123c", border: "#fecdd3", bar: "#f43f5e" },
+    indigo: { bg: "#eef2ff", text: "#3730a3", border: "#c7d2fe", bar: "#4f46e5" },
 };
 const card = {
     background: "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,252,255,0.96) 100%)",
@@ -905,25 +907,83 @@ const OverviewTab = ({ selIdx, benchmark, onDeptClick }) => {
                         </div>
                     )}
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(170px,1fr))", gap: 10 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(170px,1fr))", gap: 12 }}>
                     {[
-                        { label: "Participation rate", val: `${cq.participation}%`, sub: `vs ${benchmark.participation}% benchmark`, Icon: Users },
-                        { label: "Avg response rate", val: `${cq.responseRate}%`, sub: "across all surveys", Icon: Target },
-                        { label: "Survey burden", val: cq.burden.toFixed(1), sub: "surveys per employee", Icon: Layers },
-                        { label: "Drop-off rate", val: `${cq.dropoff}%`, sub: `–¼ ${pq.dropoff - cq.dropoff}% improved`, Icon: AlertTriangle },
-                        { label: "eNPS", val: cq.eNPS > 0 ? `+${cq.eNPS}` : String(cq.eNPS), sub: `benchmark +${benchmark.eNPS}`, Icon: Heart },
-                        { label: "mNPS", val: cq.mNPS > 0 ? `+${cq.mNPS}` : String(cq.mNPS), sub: `vs ${pq.mNPS > 0 ? "+" : ""}${pq.mNPS} prev`, Icon: Briefcase },
-                        { label: "Confidence model", val: "High", sub: "4-factor", Icon: Shield },
-                        { label: "Top drag", val: "Comp & Benefits", sub: "–¼ 8.1 pts", danger: true, Icon: TrendingUp },
+                        { label: "Participation rate", val: `${cq.participation}%`, sub: `vs ${benchmark.participation}% benchmark`, Icon: Users, color: T.blue, trend: [40, 55, 45, 70, 65, 80] },
+                        { label: "Avg response rate", val: `${cq.responseRate}%`, sub: "across all surveys", Icon: Target, color: T.teal, trend: [50, 52, 58, 55, 60, 63] },
+                        { label: "Survey burden", val: cq.burden.toFixed(1), sub: "surveys per employee", Icon: Layers, color: T.purple, trend: [1.8, 2.0, 2.1, 2.1, 2.2, 2.4] },
+                        { label: "Drop-off rate", val: `${cq.dropoff}%`, sub: `–¼ ${pq.dropoff - cq.dropoff}% improved`, Icon: AlertTriangle, color: T.indigo, trend: [14, 13, 12, 11, 11, 8] },
+                        { label: "eNPS", val: cq.eNPS > 0 ? `+${cq.eNPS}` : String(cq.eNPS), sub: `benchmark +${benchmark.eNPS}`, Icon: Heart, color: T.rose, trend: [-2, 2, 6, 8, 12, 18] },
+                        { label: "mNPS", val: cq.mNPS > 0 ? `+${cq.mNPS}` : String(cq.mNPS), sub: `vs ${pq.mNPS > 0 ? "+" : ""}${pq.mNPS} prev`, Icon: Briefcase, color: T.amber, trend: [-8, -4, 0, 8, 12, 6] },
+                        { label: "Confidence model", val: "High", sub: "4-factor analysis", Icon: Shield, color: T.green, trend: [80, 82, 85, 88, 90, 92] },
+                        { label: "Top drag", val: "Comp & Ben.", sub: "–¼ 8.1 pts QoQ", danger: true, Icon: TrendingUp, color: T.red, trend: [76, 75, 74, 72, 65, 58] },
                     ].map((k, i) => (
-                        <div key={i} style={{ ...surf, background: "#ffffff", border: "1px solid #d8e1f2", position: "relative", overflow: "hidden", boxShadow: "0 10px 20px -22px rgba(0,22,137,0.35)" }}>
-                            <div style={{ position: "absolute", inset: "0 auto auto 0", width: "100%", height: 3, background: metricAccents[i].bar }} />
-                            <p style={{ ...lbl, marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
-                                <k.Icon size={14} color="var(--color-text-secondary)" />
-                                {k.label}
-                            </p>
-                            <p style={{ fontSize: k.val.toString().length > 8 ? 16 : 26, fontWeight: 700, color: k.danger ? "var(--color-text-danger)" : "var(--color-text-primary)", lineHeight: 1.1, margin: "0 0 6px" }}>{k.val}</p>
-                            <p style={{ fontSize: 12, color: "var(--color-text-secondary)", margin: 0 }}>{k.sub}</p>
+                        <div key={i}
+                            style={{
+                                ...surf,
+                                background: "linear-gradient(180deg, #ffffff 0%, #fcfdfe 100%)",
+                                border: `1px solid ${k.color.border}66`,
+                                position: "relative",
+                                overflow: "hidden",
+                                boxShadow: "0 4px 20px rgba(0,0,0,0.02)",
+                                padding: "16px",
+                                transition: "all 300ms cubic-bezier(.25,.46,.45,.94)",
+                                cursor: "default",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between"
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.transform = "translateY(-5px)";
+                                e.currentTarget.style.boxShadow = `0 15px 35px ${k.color.bar}18`;
+                                e.currentTarget.style.borderColor = k.color.border;
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.transform = "translateY(0)";
+                                e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.02)";
+                                e.currentTarget.style.borderColor = `${k.color.border}66`;
+                            }}
+                        >
+                            {/* Top row: Icon and label */}
+                            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                                <div style={{
+                                    width: 32, height: 32, borderRadius: 10,
+                                    background: `linear-gradient(135deg, ${k.color.bar} 0%, ${k.color.text} 100%)`,
+                                    display: "flex", alignItems: "center", justifyContent: "center",
+                                    boxShadow: `0 4px 10px ${k.color.bar}44`,
+                                    flexShrink: 0
+                                }}>
+                                    <k.Icon size={16} color="#ffffff" />
+                                </div>
+                                <div style={{ minWidth: 0 }}>
+                                    <p style={{ fontSize: 10, fontWeight: 700, color: k.color.text, textTransform: "uppercase", letterSpacing: ".04em", margin: "0 0 1px" }}>{k.label.split(" ")[0]}</p>
+                                    <p style={{ fontSize: 11, fontWeight: 500, color: "var(--color-text-secondary)", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{k.label}</p>
+                                </div>
+                            </div>
+
+                            {/* Middle: Value and Sparkline */}
+                            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 8 }}>
+                                <p style={{ fontSize: k.val.toString().length > 8 ? 16 : 28, fontWeight: 800, color: k.danger ? "var(--color-text-danger)" : "var(--color-text-primary)", lineHeight: 1, margin: 0, letterSpacing: "-.02em" }}>{k.val}</p>
+                                
+                                <div style={{ width: 60, height: 24, marginBottom: 4 }}>
+                                    <svg width="100%" height="100%" viewBox="0 0 60 24" preserveAspectRatio="none">
+                                        <path
+                                            d={`M ${k.trend.map((v, idx) => `${(idx / (k.trend.length - 1)) * 60},${24 - ((v - Math.min(...k.trend)) / (Math.max(...k.trend) - Math.min(...k.trend) || 1)) * 20 - 2}`).join(" L ")}`}
+                                            fill="none"
+                                            stroke={k.color.bar}
+                                            strokeWidth="2.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            {/* Bottom: Subtext */}
+                            <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 5 }}>
+                                <div style={{ width: 4, height: 4, borderRadius: "50%", background: k.color.bar }} />
+                                <p style={{ fontSize: 10, color: "var(--color-text-tertiary)", margin: 0, fontWeight: 600, letterSpacing: "0.01em" }}>{k.sub}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
