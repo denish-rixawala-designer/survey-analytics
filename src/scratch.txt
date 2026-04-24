@@ -1,0 +1,230 @@
+--- Line 399 ---
+                                    <p style={{ fontSize: 30, fontWeight: 500, color: scoreBar(lastScore), lineHeight: 1, margin: "0 0 6px" }}>{lastScore}</p>
+                                    {prevExi > 0 && <Delta v={lastScore - prevExi} lg />}
+                                </div>
+                                <div style={{ ...surf, background: rC.bg, border: `0.5px solid ${rC.border}` }}>
+                                    <p style={{ ...lbl, color: rC.text, marginBottom: 6 }}>Retention risk</p>
+                                    <p style={{ fontSize: 15, fontWeight: 500, color: rC.text, margin: "0 0 6px", textTransform: "capitalize" }}>{risk.tier}</p>
+                                    <div style={{ display: "flex", flexWrap: "wrap", gap: 3, minHeight: 22, alignItems: "center" }}>
+                                        {risk.flags.length === 0 ? (
+                                            <span style={{ fontSize: 9, padding: "1px 6px", borderRadius: 20, background: "rgba(0,0,0,.08)", color: rC.text, lineHeight: 1.35 }}>No triggers</span>
+--- Line 530 ---
+                            ))}
+                        </div>
+                    </div>
+
+                    <p style={{ ...lbl, marginBottom: 8 }}>Quarter over quarter</p>
+                    <KpiStrip metrics={[
+                        { label: "Score", current: score, previous: QH[selIdx - 1]?.[hk] || 0, unit: "/100", dec: 0 },
+                        { label: "Favorability", current: fav, previous: fav - delta, unit: "%", dec: 1 },
+                        { label: "Responses", current: responses, previous: Math.round(responses * .88), dec: 0, higherIsBetter: true },
+--- Line 623 ---
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: 16 }}>
+                <div style={card}>
+                    <p style={{ ...lbl, marginBottom: 10 }}>Department EXI</p>
+                    <div style={{ display: "flex", alignItems: "flex-end", gap: 6, marginBottom: 6 }}>
+                        <span style={{ fontSize: 44, fontWeight: 500, lineHeight: 1, color: scoreBar(d.exi || 0) }}>{d.exi || "”"}</span>
+                        <span style={{ fontSize: 12, color: "var(--color-text-tertiary)", marginBottom: 6 }}>/100</span>
+                    </div>
+--- Line 647 ---
+                        { label: "eNPS", val: d.eNPS !== null ? (d.eNPS > 0 ? `+${d.eNPS}` : String(d.eNPS)) : "”", sub: "employee NPS" },
+                        { label: "mNPS", val: d.mNPS !== null ? (d.mNPS > 0 ? `+${d.mNPS}` : String(d.mNPS)) : "”", sub: "manager NPS" },
+                        { label: "Top strength", val: "Recognition", sub: `Score: ${d.recognition || "”"}` },
+                        { label: "Top concern", val: "Comp & Benefits", sub: `Score: ${d.comp || "”"}`, danger: true },
+                        { label: "Retention risk", val: risk.tier.charAt(0).toUpperCase() + risk.tier.slice(1), sub: `${risk.flags.length} flag${risk.flags.length !== 1 ? "s" : ""}`, danger: risk.tier === "high" },
+                        { label: "Surveys run", val: "3", sub: "this quarter" },
+                    ].map((k, i) => (
+                        <div key={i} style={surf}>
+                            <p style={{ ...lbl, marginBottom: 6 }}>{k.label}</p>
+--- Line 660 ---
+                </div>
+            </div>
+
+            <div style={card}>
+                <p style={h3s}>Department EXI trend · last {histData.length} quarters</p>
+                <p style={{ ...subs, marginBottom: 14 }}>Dashed = {benchmark.label} ({benchmark.value})</p>
+                <ResponsiveContainer width="100%" height={160}>
+                    <ComposedChart data={histData} margin={{ top: 5, right: 5, bottom: 0, left: -24 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-tertiary)" vertical={false} />
+--- Line 770 ---
+                        </ComposedChart>
+                    </ResponsiveContainer>
+                </div>
+                <div style={card}>
+                    <p style={h3s}>Annual EXI · year over year</p>
+                    <p style={{ ...subs, marginBottom: 14 }}>Aggregated from quarterly data</p>
+                    <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
+                        {annualD.map((yr, i) => (
+                            <div key={i} style={{ ...surf, flex: 1, textAlign: "center" }}>
+--- Line 788 ---
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                <div style={card}>
+                    <p style={{ ...h3s, marginBottom: 12 }}>Department EXI · {cq.q}</p>
+                    {ALL_DEPTS.map((dep, i) => {
+                        const curr = DEPT_EXI[dep]?.[selIdx] || 0;
+                        const prev = DEPT_EXI[dep]?.[selIdx - 1] || 0;
+                        const delta = curr - prev;
+--- Line 923 ---
+
+            <div style={{ ...sectionCard, background: "white", border: "1px solid #cfdaf0" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
+                    <div>
+                        <p style={{ ...h3s, marginBottom: 4 }}>Quarter over quarter ” {cq.q} vs {pq.q}</p>
+                        <p style={{ ...subs, marginBottom: 0 }}>Current quarter vs previous quarter</p>
+                    </div>
+                    <span style={{ ...pill(T.blue), fontSize: 10, fontWeight: 700, padding: "4px 9px" }}>Performance Delta</span>
+                </div>
+--- Line 955 ---
+                </div>
+            </div>
+
+            <div style={sectionCard}>
+                <p style={h3s}>EXI history · last {hist.length} quarters</p>
+                <p style={{ ...subs, marginBottom: 14 }}>Dashed = {benchmark.label} ({benchmark.value})</p>
+                <ResponsiveContainer width="100%" height={180}>
+                    <ComposedChart data={hist} margin={{ top: 5, right: 5, bottom: 0, left: -24 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-tertiary)" vertical={false} />
+--- Line 972 ---
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+                <div style={{ ...sectionCard, background: "white", border: "1px solid #cfdaf0" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10 }}>
+                        <p style={h3s}>Retention risk</p>
+                        <span style={{ ...pill(T.blue), fontSize: 9, fontWeight: 700 }}>Dept deep dive</span>
+                    </div>
+                    <div style={{ height: 1, background: "linear-gradient(90deg, rgba(0,22,137,0.24) 0%, rgba(46,165,180,0.18) 100%)", marginBottom: 8 }} />
+                    {risks.map((r, i) => {
+--- Line 1001 ---
+                    })}
+                </div>
+                <div style={{ ...sectionCard, background: "white", border: "1px solid #cfdcf0" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10 }}>
+                        <p style={{ ...h3s, marginBottom: 0 }}>Hotspot watch</p>
+                        <span style={{ ...pill(T.teal), fontSize: 9, fontWeight: 700 }}>Live patterns</span>
+                    </div>
+                    <div style={{ height: 1, background: "linear-gradient(90deg, rgba(46,165,180,0.24) 0%, rgba(0,22,137,0.14) 100%)", marginBottom: 8 }} />
+                    {HOTSPOTS.map((h, i) => {
+--- Line 1021 ---
+                    })}
+                </div>
+                <div style={{ ...sectionCard, background: "white", border: "1px solid #cfd9ef" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10 }}>
+                        <p style={{ ...h3s, marginBottom: 0 }}>Signal mix</p>
+                        <span style={{ ...pill(T.purple), fontSize: 9, fontWeight: 700 }}>Source balance</span>
+                    </div>
+                    <div style={{ height: 1, background: "linear-gradient(90deg, rgba(95,53,161,0.24) 0%, rgba(0,22,137,0.16) 100%)", marginBottom: 10 }} />
+                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+--- Line 1105 ---
+            {/* section header */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div>
+                    <p style={{ fontSize: 18, fontWeight: 700, color: "var(--color-text-primary)", margin: 0 }}>
+                        Driver Scores
+                    </p>
+                    <p style={{ fontSize: 12, color: "var(--color-text-tertiary)", margin: "2px 0 0" }}>
+                        {cq.q} · {DRIVERS.length} drivers · click any card to explore
+                    </p>
+--- Line 1215 ---
+            {/* trend chart */}
+            <div style={{ ...card, paddingBottom: 12 }}>
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 14 }}>
+                    <div>
+                        <p style={h3s}>Driver score history</p>
+                        <p style={{ ...subs, marginTop: 2 }}>Last {hist.length} quarters · dashed = {benchmark.label} ({benchmark.value})</p>
+                    </div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px", maxWidth: 360, justifyContent: "flex-end" }}>
+                        {DRIVER_LINES.map(([, l, c]) => (
+--- Line 1337 ---
+
+            {mode === "quarterly" ? (
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                    <div style={card}>
+                        <p style={h3s}>Driver score trends · last {hist.length} quarters</p>
+                        <p style={{ ...subs, marginBottom: 14 }}>Dashed = {benchmark.label} ({benchmark.value})</p>
+                        <ResponsiveContainer width="100%" height={250}>
+                            <LineChart data={hist} margin={{ top: 5, right: 5, bottom: 0, left: -24 }}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-tertiary)" vertical={false} />
+--- Line 1354 ---
+                        </ResponsiveContainer>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                        <div style={card}>
+                            <p style={{ ...h3s, marginBottom: 12 }}>Department EXI ” QoQ</p>
+                            {ALL_DEPTS.map((dep, i) => {
+                                const curr = DEPT_EXI[dep]?.[selIdx] || 0;
+                                const prev = DEPT_EXI[dep]?.[selIdx - 1] || 0;
+                                const delta = curr - prev;
+--- Line 1373 ---
+                            })}
+                        </div>
+                        <div style={card}>
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+                                <div><p style={{ ...h3s, margin: 0 }}>Dept EXI trend</p><p style={subs}>Last {deptData.length} quarters</p></div>
+                                <select className="analytics-select" value={dept} onChange={e => setDept(e.target.value)} style={{ fontSize: 12, padding: "6px 10px", fontFamily: "inherit", cursor: "pointer" }}>
+                                    {ALL_DEPTS.map(d => <option key={d}>{d}</option>)}
+                                </select>
+                            </div>
+--- Line 1394 ---
+                </div>
+            ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                    <div style={card}>
+                        <p style={h3s}>Annual EXI ” year over year</p>
+                        <p style={{ ...subs, marginBottom: 14 }}>Dashed = {benchmark.label} ({benchmark.value})</p>
+                        <div style={{ display: "grid", gridTemplateColumns: `repeat(${ANNUAL.length},minmax(0,1fr))`, gap: 10, marginBottom: 16 }}>
+                            {annualD.map((yr, i) => (
+                                <div key={i} style={surf}>
+--- Line 1415 ---
+                                <XAxis dataKey="label" tick={{ fontSize: 11, fill: "var(--color-text-tertiary)" }} axisLine={false} tickLine={false} />
+                                <YAxis domain={[60, 80]} tick={{ fontSize: 11, fill: "var(--color-text-tertiary)" }} axisLine={false} tickLine={false} />
+                                <ReferenceLine y={benchmark.value} stroke={T.purple.bar} strokeDasharray="4 2" strokeWidth={1} />
+                                <Tooltip content={<TT />} />
+                                <Bar dataKey="exi" name="Annual EXI avg" fill={T.green.bar} radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                    <div style={card}>
+--- Line 1420 ---
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                    <div style={card}>
+                        <p style={{ ...h3s, marginBottom: 14 }}>Year-over-year comparison</p>
+                        <div style={{ overflowX: "auto" }}>
+                            <table className="analytics-data-table" style={{ fontSize: 12 }}>
+                                <thead>
+                                    <tr>
+--- Line 1892 ---
+                {/* Chart header */}
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16, gap: 12, flexWrap: "wrap" }}>
+                    <div>
+                        <p style={{ fontSize: 14, fontWeight: 700, color: "var(--color-text-primary)", margin: "0 0 2px", letterSpacing: "-.01em" }}>
+                            Score comparison · {seg === "tenure" ? "Tenure bands" : "Role levels"}
+                        </p>
+                        <p style={{ fontSize: 12, color: "var(--color-text-secondary)", margin: 0 }}>
+                            EXI, Comp & Benefits, and Wellbeing · dashed line = benchmark 72
+                        </p>
+--- Line 1949 ---
+                    </div>
+                    <p style={{ fontSize: 12, color: T.purple.text, margin: 0, lineHeight: 1.5 }}>
+                        <strong style={{ fontWeight: 700 }}>Insight:</strong> {
+                            seg === "tenure"
+                                ? `Comp & Benefits scores decline steadily with tenure — employees at the 2–4 yr band score only ${TENURE[3].comp}, vs ${TENURE[0].comp} for new hires. Retention risk is elevated at this cohort.`
+                                : `Comp & Benefits is consistently the weakest driver across all role levels (avg ${Math.round(ROLES.reduce((s, r) => s + r.comp, 0) / ROLES.length)}). EXI improves with seniority, peaking at Director+ (${ROLES[4].exi}).`
+                        }
+                    </p>
+                </div>
+--- Line 2082 ---
+    const [exp, setExp] = useState(null);
+    return (
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={card}>
+                <p style={h3s}>Participation & health ” QoQ · {cq.q} vs {pq.q}</p>
+                <p style={{ ...subs, marginBottom: 14 }}>Current quarter vs previous quarter</p>
+                <KpiStrip metrics={[
+                    { label: "Participation rate", current: cq.participation, previous: pq.participation, unit: "%", dec: 1, note: "Surveys run: Q2=6, Q1=5", icon: Users },
+                    { label: "Avg response rate", current: cq.responseRate, previous: pq.responseRate, unit: "%", dec: 1, icon: Target },
