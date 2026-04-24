@@ -1001,12 +1001,12 @@ const OverviewTab = ({ selIdx, benchmark, onDeptClick }) => {
                         </div>
                         <span style={{ ...pill(T.blue), fontSize: 9, fontWeight: 700 }}>Dept deep dive</span>
                     </div>
-                    <div style={{ height: 1, background: "linear-gradient(90deg, rgba(0,22,137,0.24) 0%, rgba(46,165,180,0.18) 100%)", marginBottom: 8 }} />
+                    {/* <div style={{ height: 1, background: "linear-gradient(90deg, rgba(0,22,137,0.24) 0%, rgba(46,165,180,0.18) 100%)", marginBottom: 8 }} /> */}
                     {risks.map((r, i) => {
                         const c = r.tier === "high" ? T.red : r.tier === "medium" ? T.amber : T.green;
                         return (
                             <div key={i} onClick={() => onDeptClick(r.dept)}
-                                style={{ display: "flex", alignItems: "center", gap: 8, padding: "9px 8px", borderBottom: i < risks.length - 1 ? "0.5px solid var(--color-border-tertiary)" : "none", cursor: "pointer", borderRadius: 10, background: i % 2 === 0 ? "rgba(243,247,255,0.55)" : "transparent" }}>
+                                style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 8px", borderBottom: i < risks.length - 1 ? "0.5px solid var(--color-border-tertiary)" : "none", cursor: "pointer", background: i % 2 === 0 ? "rgba(243,247,255,0.55)" : "transparent" }}>
                                 <div style={{ width: 7, height: 7, borderRadius: "50%", background: c.bar, flexShrink: 0, boxShadow: `0 0 0 3px ${c.bg}` }} />
                                 <span style={{ fontSize: 12, flex: 1, color: "var(--color-text-primary)" }}>{r.dept}</span>
                                 <span style={{ ...pill(c), fontSize: 9, fontWeight: 700 }}>{r.tier === "high" ? "High" : r.tier === "medium" ? "Med" : "Low"}</span>
@@ -1035,7 +1035,7 @@ const OverviewTab = ({ selIdx, benchmark, onDeptClick }) => {
                         </div>
                         <span style={{ ...pill(T.teal), fontSize: 9, fontWeight: 700 }}>Live patterns</span>
                     </div>
-                    <div style={{ height: 1, background: "linear-gradient(90deg, rgba(46,165,180,0.24) 0%, rgba(0,22,137,0.14) 100%)", marginBottom: 8 }} />
+                    {/* <div style={{ height: 1, background: "linear-gradient(90deg, rgba(46,165,180,0.24) 0%, rgba(0,22,137,0.14) 100%)", marginBottom: 8 }} /> */}
                     {HOTSPOTS.map((h, i) => {
                         const c = h.risk === "high" ? T.red : h.risk === "med" ? T.amber : T.gray;
                         return (
@@ -1060,7 +1060,7 @@ const OverviewTab = ({ selIdx, benchmark, onDeptClick }) => {
                         </div>
                         <span style={{ ...pill(T.purple), fontSize: 9, fontWeight: 700 }}>Source balance</span>
                     </div>
-                    <div style={{ height: 1, background: "linear-gradient(90deg, rgba(95,53,161,0.24) 0%, rgba(0,22,137,0.16) 100%)", marginBottom: 10 }} />
+                    {/* <div style={{ height: 1, background: "linear-gradient(90deg, rgba(95,53,161,0.24) 0%, rgba(0,22,137,0.16) 100%)", marginBottom: 10 }} /> */}
                     <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                         <PieChart width={100} height={100}>
                             <Pie data={SIGNAL_MIX} cx={48} cy={48} innerRadius={28} outerRadius={48} dataKey="value" strokeWidth={0}>
@@ -1407,7 +1407,7 @@ const TrendsTab = ({ selIdx, benchmark }) => {
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                         <div style={card}>
-                            <div style={{ padding: "18px 20px 16px", display: "flex", alignItems: "center", gap: 12, borderBottom: "none" }}>
+                            <div style={{ padding: "0px 0px 16px", display: "flex", alignItems: "center", gap: 12, borderBottom: "none" }}>
                                 <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(14,165,233,0.25)" }}>
                                     <Building2 size={16} color="#ffffff" />
                                 </div>
@@ -1418,20 +1418,20 @@ const TrendsTab = ({ selIdx, benchmark }) => {
                             </div>
                             <div style={{ padding: "0 20px 20px" }}>
                                 {ALL_DEPTS.map((dep, i) => {
-                                const curr = DEPT_EXI[dep]?.[selIdx] || 0;
-                                const prev = DEPT_EXI[dep]?.[selIdx - 1] || 0;
-                                const delta = curr - prev;
-                                return (
-                                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: i < ALL_DEPTS.length - 1 ? "0.5px solid var(--color-border-tertiary)" : "none" }}>
-                                        <span style={{ fontSize: 12, width: 120, flexShrink: 0, color: "var(--color-text-primary)" }}>{dep}</span>
-                                        <div style={{ flex: 1, height: 4, borderRadius: 2, background: "var(--color-background-secondary)" }}>
-                                            <div style={{ height: 4, borderRadius: 2, width: `${curr}%`, background: scoreBar(curr) }} />
+                                    const curr = DEPT_EXI[dep]?.[selIdx] || 0;
+                                    const prev = DEPT_EXI[dep]?.[selIdx - 1] || 0;
+                                    const delta = curr - prev;
+                                    return (
+                                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: i < ALL_DEPTS.length - 1 ? "0.5px solid var(--color-border-tertiary)" : "none" }}>
+                                            <span style={{ fontSize: 12, width: 120, flexShrink: 0, color: "var(--color-text-primary)" }}>{dep}</span>
+                                            <div style={{ flex: 1, height: 4, borderRadius: 2, background: "var(--color-background-secondary)" }}>
+                                                <div style={{ height: 4, borderRadius: 2, width: `${curr}%`, background: scoreBar(curr) }} />
+                                            </div>
+                                            <span style={{ fontSize: 12, fontWeight: 500, width: 22, textAlign: "right", color: "var(--color-text-primary)" }}>{curr}</span>
+                                            <span style={{ fontSize: 11, width: 28, textAlign: "right", color: delta > 0 ? T.green.text : delta < 0 ? T.red.text : T.gray.text }}>{delta > 0 ? "–²" : delta < 0 ? "–¼" : "†’"}{Math.abs(delta)}</span>
                                         </div>
-                                        <span style={{ fontSize: 12, fontWeight: 500, width: 22, textAlign: "right", color: "var(--color-text-primary)" }}>{curr}</span>
-                                        <span style={{ fontSize: 11, width: 28, textAlign: "right", color: delta > 0 ? T.green.text : delta < 0 ? T.red.text : T.gray.text }}>{delta > 0 ? "–²" : delta < 0 ? "–¼" : "†’"}{Math.abs(delta)}</span>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
                             </div>
                         </div>
                         <div style={card}>
@@ -1584,7 +1584,7 @@ const HeatmapTab = ({ onDeptClick }) => (
             </div>
 
             {/* heat-scale reference bar */}
-            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 28px", background: "#f8faff", borderBottom: "1px solid var(--color-border-tertiary)" }}>
+            {/* <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 28px", background: "#f8faff", borderBottom: "1px solid var(--color-border-tertiary)" }}>
                 <span style={{ fontSize: 10, fontWeight: 700, color: "var(--color-text-tertiary)", textTransform: "uppercase", letterSpacing: ".08em", whiteSpace: "nowrap" }}>Score scale</span>
                 <div style={{ display: "flex", gap: 3, flex: 1 }}>
                     {[["< 60", T.red.bg, T.red.border, T.red.text], ["60–65", "#fff3e0", "#ffe0b2", "#e65100"], ["66–71", T.amber.bg, T.amber.border, T.amber.text], ["72–77", T.blue.bg, T.blue.border, T.blue.text], ["78+", T.green.bg, T.green.border, T.green.text]].map(([lbl, bg, bdr, txt]) => (
@@ -1597,7 +1597,7 @@ const HeatmapTab = ({ onDeptClick }) => (
                     <div style={{ width: 12, height: 12, borderRadius: 3, background: T.gray.bg, border: `1px dashed ${T.gray.border}` }} />
                     <span style={{ fontSize: 11, color: T.gray.text, fontWeight: 600 }}>Suppressed</span>
                 </div>
-            </div>
+            </div> */}
 
             {/* scrollable table */}
             <div style={{ padding: "20px 28px", overflowX: "auto", background: "#ffffff" }}>
@@ -1777,51 +1777,42 @@ const SegmentsTab = () => {
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
             {/* ── Header Control Bar ── */}
+            {/* premium header */}
             <div style={{
-                background: "linear-gradient(130deg, rgb(30, 58, 95) 0%, rgb(29, 78, 216) 55%, rgb(124, 58, 237) 100%)",
-                borderRadius: "var(--border-radius-lg)",
-                padding: "18px 20px",
-                boxShadow: "0 8px 32px rgba(15,23,42,.25), inset 0 1px 0 rgba(255,255,255,.06)",
-                display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap",
+                padding: "18px 20px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16,
+                background: "var(--color-background-primary)",
+                border: "1px solid var(--color-border-secondary)",
+                borderRadius: 16,
+                boxShadow: "var(--shadow-soft)"
             }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                    <p style={{ fontSize: 16, fontWeight: 700, color: "#ffffff", margin: 0, letterSpacing: "-.01em" }}>
-                        Workforce Segments
-                    </p>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,.5)", margin: 0 }}>
-                        Experience index breakdown · current quarter
-                    </p>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #6366f1 0%, #4338ca 100%)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(99,102,241,0.25)" }}>
+                        <Users size={16} color="#ffffff" />
+                    </div>
+                    <div>
+                        <p style={{ fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)", margin: "0 0 2px", letterSpacing: "-.01em" }}>Workforce Segments</p>
+                        <p style={{ fontSize: 12, color: "var(--color-text-secondary)", margin: 0 }}>Experience index breakdown · current quarter</p>
+                    </div>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                     {/* Toggle */}
-                    <div style={{
-                        display: "flex", background: "rgba(255,255,255,.08)", borderRadius: 10,
-                        padding: 3, gap: 3, border: "0.5px solid rgba(255,255,255,.12)",
-                    }}>
+                    <div style={{ display: "flex", background: "var(--color-background-secondary)", borderRadius: 10, padding: 3, gap: 3, border: "0.5px solid var(--color-border-tertiary)" }}>
                         {[["tenure", "By Tenure"], ["role", "By Role Level"]].map(([k, l]) => (
-                            <button
-                                key={k}
-                                onClick={() => setSeg(k)}
+                            <button key={k} onClick={() => setSeg(k)}
                                 style={{
                                     fontSize: 12, padding: "7px 16px", borderRadius: 8,
                                     fontWeight: seg === k ? 700 : 500, border: "none", cursor: "pointer",
                                     fontFamily: "inherit", transition: "all 180ms ease",
-                                    background: seg === k
-                                        ? "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)"
-                                        : "transparent",
-                                    color: seg === k ? "#ffffff" : "rgba(255,255,255,.55)",
-                                    boxShadow: seg === k ? "0 2px 8px rgba(99,102,241,.45)" : "none",
+                                    background: seg === k ? "var(--color-background-primary)" : "transparent",
+                                    color: seg === k ? "var(--color-text-primary)" : "var(--color-text-secondary)",
+                                    boxShadow: seg === k ? "var(--shadow-sm)" : "none",
                                 }}
                             >{l}</button>
                         ))}
                     </div>
                     {/* Info badge */}
-                    <div style={{
-                        display: "flex", alignItems: "center", gap: 6, padding: "7px 12px",
-                        borderRadius: 8, background: "rgba(255,255,255,.07)",
-                        border: "0.5px solid rgba(255,255,255,.12)", fontSize: 11, color: "rgba(255,255,255,.5)",
-                    }}>
-                        <Info size={13} color="rgba(255,255,255,.4)" />
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 12px", borderRadius: 8, background: "var(--color-background-secondary)", border: "0.5px solid var(--color-border-tertiary)", fontSize: 11, color: "var(--color-text-tertiary)" }}>
+                        <Info size={13} color="var(--color-text-tertiary)" />
                         Current quarter only
                     </div>
                 </div>
@@ -2064,40 +2055,34 @@ const QuestionsTab = () => {
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             {/* ── Premium Header & Toggle ── */}
+            {/* premium header */}
             <div style={{
-                background: "linear-gradient(130deg, rgb(30, 58, 95) 0%, rgb(29, 78, 216) 55%, rgb(124, 58, 237) 100%)",
-                borderRadius: "var(--border-radius-lg)",
-                padding: "18px 20px",
-                boxShadow: "0 8px 32px rgba(15,23,42,.25), inset 0 1px 0 rgba(255,255,255,.06)",
-                display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap",
+                padding: "18px 20px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16,
+                background: "var(--color-background-primary)",
+                border: "1px solid var(--color-border-secondary)",
+                borderRadius: 16,
+                boxShadow: "var(--shadow-soft)"
             }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                    <p style={{ fontSize: 16, fontWeight: 700, color: "#ffffff", margin: 0, letterSpacing: "-.01em" }}>
-                        Question Analysis
-                    </p>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,.5)", margin: 0 }}>
-                        Deep dive into specific survey items
-                    </p>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(59,130,246,0.25)" }}>
+                        <HelpCircle size={16} color="#ffffff" />
+                    </div>
+                    <div>
+                        <p style={{ fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)", margin: "0 0 2px", letterSpacing: "-.01em" }}>Question Analysis</p>
+                        <p style={{ fontSize: 12, color: "var(--color-text-secondary)", margin: 0 }}>Deep dive into specific survey items</p>
+                    </div>
                 </div>
-
                 {/* Toggle */}
-                <div style={{
-                    display: "flex", background: "rgba(255,255,255,.08)", borderRadius: 10,
-                    padding: 3, gap: 3, border: "0.5px solid rgba(255,255,255,.12)",
-                }}>
+                <div style={{ display: "flex", background: "var(--color-background-secondary)", borderRadius: 10, padding: 3, gap: 3, border: "0.5px solid var(--color-border-tertiary)" }}>
                     {QTABS.map(t => (
-                        <button
-                            key={t.k}
-                            onClick={() => setQt(t.k)}
+                        <button key={t.k} onClick={() => setQt(t.k)}
                             style={{
                                 fontSize: 12, padding: "7px 16px", borderRadius: 8,
                                 fontWeight: qt === t.k ? 700 : 500, border: "none", cursor: "pointer",
                                 fontFamily: "inherit", transition: "all 180ms ease",
-                                background: qt === t.k
-                                    ? "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)"
-                                    : "transparent",
-                                color: qt === t.k ? "#ffffff" : "rgba(255,255,255,.55)",
-                                boxShadow: qt === t.k ? "0 2px 8px rgba(99,102,241,.45)" : "none",
+                                background: qt === t.k ? "var(--color-background-primary)" : "transparent",
+                                color: qt === t.k ? "var(--color-text-primary)" : "var(--color-text-secondary)",
+                                boxShadow: qt === t.k ? "var(--shadow-sm)" : "none",
                             }}
                         >{t.l}</button>
                     ))}
@@ -2192,24 +2177,24 @@ const ParticipationTab = ({ selIdx, onDeptClick }) => {
             {/* ── Main participation matrix card ── */}
             <div style={{ borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,.1)", border: "1px solid var(--color-border-secondary)" }}>
 
-            {/* premium header */}
-            <div style={{ padding: "18px 20px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(139,92,246,0.25)" }}>
-                        <Activity size={16} color="#ffffff" />
-                    </div>
-                    <div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 2 }}>
-                            <p style={{ fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)", margin: 0, letterSpacing: "-.01em" }}>Dept — survey participation matrix</p>
-                            <span style={{ padding: "2px 8px", borderRadius: 100, background: "var(--color-background-secondary)", fontSize: 9, fontWeight: 700, color: "var(--color-text-secondary)", textTransform: "uppercase", letterSpacing: ".04em", border: "0.5px solid var(--color-border-tertiary)" }}>{cq.q}</span>
+                {/* premium header */}
+                <div style={{ padding: "18px 20px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(139,92,246,0.25)" }}>
+                            <Activity size={16} color="#ffffff" />
                         </div>
-                        <p style={{ fontSize: 12, color: "var(--color-text-secondary)", margin: 0 }}>Click dept name to open profile · grey = suppressed</p>
+                        <div>
+                            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 2 }}>
+                                <p style={{ fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)", margin: 0, letterSpacing: "-.01em" }}>Dept — survey participation matrix</p>
+                                <span style={{ padding: "2px 8px", borderRadius: 100, background: "var(--color-background-secondary)", fontSize: 9, fontWeight: 700, color: "var(--color-text-secondary)", textTransform: "uppercase", letterSpacing: ".04em", border: "0.5px solid var(--color-border-tertiary)" }}>{cq.q}</span>
+                            </div>
+                            <p style={{ fontSize: 12, color: "var(--color-text-secondary)", margin: 0 }}>Click dept name to open profile · grey = suppressed</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
                 {/* heat-scale reference bar */}
-                <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 28px", background: "#f8faff", borderBottom: "1px solid var(--color-border-tertiary)" }}>
+                {/* <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 28px", background: "#f8faff", borderBottom: "1px solid var(--color-border-tertiary)" }}>
                     <span style={{ fontSize: 10, fontWeight: 700, color: "var(--color-text-tertiary)", textTransform: "uppercase", letterSpacing: ".08em", whiteSpace: "nowrap" }}>Score scale</span>
                     <div style={{ display: "flex", gap: 3, flex: 1 }}>
                         {[["< 60", T.red.bg, T.red.border, T.red.text], ["60–79", T.amber.bg, T.amber.border, T.amber.text], ["80+", T.green.bg, T.green.border, T.green.text]].map(([lbl, bg, bdr, txt]) => (
@@ -2222,7 +2207,7 @@ const ParticipationTab = ({ selIdx, onDeptClick }) => {
                         <div style={{ width: 12, height: 12, borderRadius: 3, background: T.gray.bg, border: `1px dashed ${T.gray.border}` }} />
                         <span style={{ fontSize: 11, color: T.gray.text, fontWeight: 600 }}>Suppressed</span>
                     </div>
-                </div>
+                </div> */}
 
                 <div style={{ padding: "20px 28px", overflowX: "auto", background: "#ffffff" }}>
                     <table className="analytics-data-table" style={{ borderCollapse: "separate", borderSpacing: 4, width: "100%" }}>
@@ -2687,8 +2672,8 @@ const ActionCenter = ({ actions, setActions }) => {
                     { label: "In progress", val: counts.in_progress, c: T.amber, Icon: RefreshCw },
                     { label: "Done", val: counts.done, c: T.green, Icon: CheckSquare }
                 ].map((k, i) => (
-                    <div key={i} style={{ 
-                        ...surf, background: "#ffffff", border: "1px solid var(--color-border-secondary)", 
+                    <div key={i} style={{
+                        ...surf, background: "#ffffff", border: "1px solid var(--color-border-secondary)",
                         position: "relative", overflow: "hidden", boxShadow: "var(--shadow-soft)", padding: "16px 18px"
                     }}>
                         <div style={{ position: "absolute", inset: "0 auto auto 0", width: "100%", height: 3, background: k.c.bar }} />
@@ -2704,22 +2689,22 @@ const ActionCenter = ({ actions, setActions }) => {
             {/* Controls */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <button onClick={openNew} 
-                        style={{ 
-                            display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 18px", 
-                            borderRadius: "var(--border-radius-md)", background: "linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)", 
-                            border: "none", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer", 
-                            fontFamily: "inherit", boxShadow: "0 4px 12px rgba(29,78,216,0.2)" 
+                    <button onClick={openNew}
+                        style={{
+                            display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 18px",
+                            borderRadius: "var(--border-radius-md)", background: "linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)",
+                            border: "none", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer",
+                            fontFamily: "inherit", boxShadow: "0 4px 12px rgba(29,78,216,0.2)"
                         }}
                     >
                         <Plus size={16} /> New action
                     </button>
                     <div style={{ display: "flex", background: "var(--color-background-secondary)", borderRadius: "var(--border-radius-md)", padding: 3, gap: 2 }}>
                         {[["all", "All"], ["not_started", "Not started"], ["in_progress", "In progress"], ["done", "Done"]].map(([k, l]) => (
-                            <button key={k} onClick={() => setFilter(k)} 
-                                style={{ 
-                                    fontSize: 11, padding: "6px 14px", borderRadius: "var(--border-radius-sm)", border: "none", 
-                                    fontWeight: filter === k ? 700 : 500, cursor: "pointer", fontFamily: "inherit", 
+                            <button key={k} onClick={() => setFilter(k)}
+                                style={{
+                                    fontSize: 11, padding: "6px 14px", borderRadius: "var(--border-radius-sm)", border: "none",
+                                    fontWeight: filter === k ? 700 : 500, cursor: "pointer", fontFamily: "inherit",
                                     background: filter === k ? "var(--color-background-primary)" : "transparent",
                                     color: filter === k ? "var(--color-text-primary)" : "var(--color-text-secondary)",
                                     boxShadow: filter === k ? "var(--shadow-sm)" : "none",
@@ -2738,7 +2723,7 @@ const ActionCenter = ({ actions, setActions }) => {
 
             {/* Form */}
             {showForm && (
-                <div style={{ 
+                <div style={{
                     ...card, background: "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,250,252,1) 100%)",
                     border: "1px solid var(--color-border-info)", boxShadow: "0 12px 30px -10px rgba(59,130,246,0.15)"
                 }}>
@@ -2750,7 +2735,7 @@ const ActionCenter = ({ actions, setActions }) => {
                             {editId ? "Edit existing action" : "Create new action"}
                         </p>
                     </div>
-                    
+
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 16, marginBottom: 20 }}>
                         <div style={{ gridColumn: "span 4" }}>
                             <p style={{ ...lbl, marginBottom: 6 }}>Action title *</p>
@@ -2804,19 +2789,19 @@ const ActionCenter = ({ actions, setActions }) => {
                         const sm = STATUS_META[a.status];
                         const linked = BASE_INSIGHTS.find(ins => ins.id === a.insightId);
                         return (
-                            <div key={a.id} 
-                                style={{ 
-                                    display: "flex", alignItems: "center", gap: 16, padding: "14px 18px", 
-                                    background: "#ffffff", border: "1px solid var(--color-border-secondary)", 
+                            <div key={a.id}
+                                style={{
+                                    display: "flex", alignItems: "center", gap: 16, padding: "14px 18px",
+                                    background: "#ffffff", border: "1px solid var(--color-border-secondary)",
                                     borderRadius: "var(--border-radius-md)", transition: "all 0.2s ease", cursor: "default"
                                 }}
                                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "var(--shadow-md)"; e.currentTarget.style.borderColor = "var(--color-border-tertiary)"; }}
                                 onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "var(--color-border-secondary)"; }}
                             >
-                                <button onClick={() => cycle(a.id)} title="Click to cycle status" 
-                                    style={{ 
-                                        width: 32, height: 32, borderRadius: 10, flexShrink: 0, 
-                                        display: "flex", alignItems: "center", justifyContent: "center", 
+                                <button onClick={() => cycle(a.id)} title="Click to cycle status"
+                                    style={{
+                                        width: 32, height: 32, borderRadius: 10, flexShrink: 0,
+                                        display: "flex", alignItems: "center", justifyContent: "center",
                                         background: sm.c.bg, border: `1px solid ${sm.c.border}`, cursor: "pointer",
                                         transition: "transform 0.1s active"
                                     }}
@@ -2825,11 +2810,11 @@ const ActionCenter = ({ actions, setActions }) => {
                                 >
                                     <sm.Icon size={14} color={sm.c.text} />
                                 </button>
-                                
+
                                 <div style={{ flex: 1, minWidth: 0 }}>
-                                    <p style={{ 
+                                    <p style={{
                                         fontSize: 14, fontWeight: 600, margin: "0 0 6px",
-                                        color: a.status === "done" ? "var(--color-text-tertiary)" : "var(--color-text-primary)", 
+                                        color: a.status === "done" ? "var(--color-text-tertiary)" : "var(--color-text-primary)",
                                         textDecoration: a.status === "done" ? "line-through" : "none",
                                         whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
                                     }}>
@@ -2860,10 +2845,10 @@ const ActionCenter = ({ actions, setActions }) => {
                                 </div>
 
                                 <div style={{ display: "flex", gap: 6, flexShrink: 0, borderLeft: "1px solid var(--color-border-secondary)", paddingLeft: 16 }}>
-                                    <button onClick={() => openEdit(a)} 
-                                        style={{ 
-                                            width: 32, height: 32, borderRadius: 8, border: "1px solid var(--color-border-secondary)", 
-                                            background: "var(--color-background-secondary)", cursor: "pointer", 
+                                    <button onClick={() => openEdit(a)}
+                                        style={{
+                                            width: 32, height: 32, borderRadius: 8, border: "1px solid var(--color-border-secondary)",
+                                            background: "var(--color-background-secondary)", cursor: "pointer",
                                             display: "flex", alignItems: "center", justifyContent: "center",
                                             transition: "all 0.15s ease"
                                         }}
@@ -2872,10 +2857,10 @@ const ActionCenter = ({ actions, setActions }) => {
                                     >
                                         <Edit2 size={13} color="var(--color-text-secondary)" />
                                     </button>
-                                    <button onClick={() => remove(a.id)} 
-                                        style={{ 
-                                            width: 32, height: 32, borderRadius: 8, border: `1px solid ${T.red.border}`, 
-                                            background: T.red.bg, cursor: "pointer", display: "flex", alignItems: "center", 
+                                    <button onClick={() => remove(a.id)}
+                                        style={{
+                                            width: 32, height: 32, borderRadius: 8, border: `1px solid ${T.red.border}`,
+                                            background: T.red.bg, cursor: "pointer", display: "flex", alignItems: "center",
                                             justifyContent: "center", transition: "all 0.15s ease"
                                         }}
                                         onMouseEnter={e => e.currentTarget.style.background = "#fee2e2"}
